@@ -1,0 +1,33 @@
+@inject LanguageSetterJsInterop LanguageSetterJs
+@inject NavigationManager Navigation
+
+<select class="form-select" aria-label="Switch language" @bind="Value" @bind:after="ApplySelectedCultureAsync">
+    @foreach (var culture in SupportedCultures)
+    {
+        if (ReferenceEquals(CultureInfo.CurrentCulture, Value))
+        {
+            <option selected value="@culture">@ItemTemplate(culture)</option>    
+        }
+        else
+        {
+            <option value="@culture">@ItemTemplate(culture)</option>
+        }
+    }
+</select>
+
+@code {
+    [Parameter] public required List<CultureInfo> SupportedCultures { get; set; }
+    [Parameter] public required CultureInfo Value { get; set; }
+    [Parameter] public EventCallback<CultureInfo> ValueChanged { get; set; }
+    [Parameter] public required RenderFragment<CultureInfo> ItemTemplate { get; set; }
+    [Parameter] public bool Reload { get; set; }
+    
+    private async Task ApplySelectedCultureAsync()
+    {
+        if (CultureInfo.CurrentCulture.Name != Value.Name)
+        {
+            await LanguageSetterJs.SetLocalization(Value!.Name);
+            if (Reload) Navigation.NavigateTo(Navigation.Uri, forceLoad: Reload);
+        }
+    }
+}

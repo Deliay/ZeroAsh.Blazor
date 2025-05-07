@@ -6,7 +6,9 @@
     <label for="upload">
         <div class="upload">
             @ChildContent
-            <InputFile id="upload" @ref="_uploader" OnChange="OnChange"/>
+            <InputFile id="upload" @ref="_uploader"
+                       OnChange="OnChange"
+                       AdditionalAttributes="@AdditionalAttributes"/>
         </div>
     </label>
 </div>
@@ -14,6 +16,7 @@
 @code {
     [Parameter] public EventCallback<InputFileChangeEventArgs> OnChange { get; set; }
     [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public Dictionary<string, object> AdditionalAttributes { get; set; } = [];
     
     private InputFile? _uploader;
     private ElementReference _container;

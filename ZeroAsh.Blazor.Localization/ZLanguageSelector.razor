@@ -6,7 +6,7 @@
     {
         if (ReferenceEquals(CultureInfo.CurrentCulture, Value))
         {
-            <option selected value="@culture">@ItemTemplate(culture)</option>    
+            <option selected value="@culture">@ItemTemplate(culture)</option>
         }
         else
         {
@@ -19,9 +19,14 @@
     [Parameter] public required List<CultureInfo> SupportedCultures { get; set; }
     [Parameter] public required CultureInfo Value { get; set; }
     [Parameter] public EventCallback<CultureInfo> ValueChanged { get; set; }
-    [Parameter] public required RenderFragment<CultureInfo> ItemTemplate { get; set; }
+    [Parameter] public required RenderFragment<CultureInfo> ItemTemplate { get; set; } = GetDefaultItemTemplate;
     [Parameter] public bool Reload { get; set; }
-    
+
+    private static RenderFragment GetDefaultItemTemplate(CultureInfo context)
+    {
+        return (@<p>@context.DisplayName</p>);
+    }
+
     private async Task ApplySelectedCultureAsync()
     {
         if (CultureInfo.CurrentCulture.Name != Value.Name)
@@ -30,4 +35,5 @@
             if (Reload) Navigation.NavigateTo(Navigation.Uri, forceLoad: Reload);
         }
     }
+
 }

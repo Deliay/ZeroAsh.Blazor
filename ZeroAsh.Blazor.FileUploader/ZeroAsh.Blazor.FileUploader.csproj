@@ -3,9 +3,7 @@
         <SupportedPlatform Include="browser"/>
         <None Include="../README.md" Pack="true" PackagePath="/"/>
         <None Include="../LICENSE" Pack="true" PackagePath="/"/>
-        <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-        <PackageReference Include="Microsoft.Extensions.Localization" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web"/>
     </ItemGroup>
 
 </Project>
